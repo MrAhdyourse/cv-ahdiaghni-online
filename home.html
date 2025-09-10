@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahdi Aghni | Portofolio</title>
+    <link rel="icon" href="assets/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a192f; /* Navy gelap sebagai background utama */
+            color: #ccd6f6; /* Warna teks utama */
+        }
+        .accent-color {
+            color: #64ffda; /* Warna aksen (hijau mint) */
+        }
+        .accent-bg {
+            background-color: #64ffda;
+        }
+        .card-bg {
+            background-color: #112240; /* Navy sedikit lebih terang untuk kartu */
+        }
+        .section-heading::after {
+            content: '';
+            display: block;
+            position: relative;
+            top: -12px;
+            width: 300px;
+            height: 1px;
+            margin-left: 20px;
+            background-color: #233554;
+        }
+        @keyframes subtle-glow {
+            0%, 100% {
+                text-shadow: 0 0 4px rgba(100, 255, 218, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 8px rgba(100, 255, 218, 0.5);
+            }
+        }
+        .animate-subtle-glow {
+            animation: subtle-glow 3s ease-in-out infinite;
+        }
+        .font-logo {
+            font-family: 'Playfair Display', serif;
+        }
+        .animate-text-gradient {
+            background: linear-gradient(to right, #64ffda, #ccd6f6, #64ffda);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: text-gradient-move 3s ease-in-out infinite;
+        }
+
+        @keyframes text-gradient-move {
+            to {
+                background-position: 200% center;
+            }
+        }
+        .skill-explanation {
+            height: 0;
+            overflow: hidden;
+            padding: 0 8px; /* Initial padding to be expanded */
+            transition: height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .neon-text {
+            color: #fff; /* White base for the text */
+            text-shadow:
+                0 0 7px #64ffda,
+                0 0 10px #64ffda,
+                0 0 21px #64ffda,
+                0 0 42px #0f0,
+                0 0 82px #00f,
+                0 0 92px #f00,
+                0 0 102px #0f0,
+                0 0 151px #00f;
+            animation: neon-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neon-glow {
+            from {
+                text-shadow:
+                    0 0 3px #64ffda,
+                    0 0 5px #64ffda,
+                    0 0 10px #64ffda,
+                    0 0 20px #0f0,
+                    0 0 40px #00f,
+                    0 0 45px #f00,
+                    0 0 50px #0f0,
+                    0 0 75px #00f;
+            }
+            to {
+                text-shadow:
+                    0 0 1.5px #64ffda,
+                    0 0 2.5px #64ffda,
+                    0 0 5px #64ffda,
+                    0 0 10px #0f0,
+                    0 0 20px #00f,
+                    0 0 23px #f00,
+                    0 0 25px #0f0,
+                    0 0 37.5px #00f;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+    <div class="fixed bottom-4 right-4 z-50 flex items-center space-x-2 card-bg p-2 rounded-md shadow-lg">
+        <audio id="background-music" loop>
+            <source src="assets/music/musicbg.mp3" type="audio/mpeg">
+            Browser Anda tidak mendukung elemen audio.
+        </audio>
+        <button id="play-button" class="text-slate-200 hover:text-accent-color transition-colors focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M5 3l14 9-14 9V3z"/>
+            </svg>
+        </button>
+        <button id="pause-button" class="text-slate-200 hover:text-accent-color transition-colors focus:outline-none hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Header / Navigasi -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-opacity-80 backdrop-blur-md transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold font-logo animate-text-gradient">PORTOFOLIO ONLINE</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:accent-color transition-colors">1. Tentang Saya</a>
+                <a href="#experience" class="hover:accent-color transition-colors">2. Pengalaman</a>
+                <a href="#skills" class="hover:accent-color transition-colors">3. Keahlian</a>
+                <a href="#contact" class="hover:accent-color transition-colors">4. Kontak</a>
+                <a href="https://wa.me/6281395411676" target="_blank" class="border accent-color border-current px-4 py-2 rounded-md hover:bg-teal-300/10 transition-all">Hubungi via WhatsApp</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden fixed top-0 right-0 h-full w-3/4 bg-[#112240] z-50 p-8 transform translate-x-full transition-transform duration-300">
+        <button id="close-menu-button" class="absolute top-6 right-6 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="flex flex-col space-y-8 mt-12 text-lg">
+            <a href="#about" class="mobile-nav-link hover:accent-color transition-colors">1. Tentang Saya</a>
+            <a href="#experience" class="mobile-nav-link hover:accent-color transition-colors">2. Pengalaman</a>
+            <a href="#skills" class="mobile-nav-link hover:accent-color transition-colors">3. Keahlian</a>
+            <a href="#contact" class="mobile-nav-link hover:accent-color transition-colors">4. Kontak</a>
+            <a href="https://wa.me/6281395411676" target="_blank" class="border accent-color border-current mt-4 text-center px-4 py-2 rounded-md hover:bg-teal-300/10 transition-all">Hubungi via WhatsApp</a>
+        </div>
+    </div>
+
+
+    <main class="container mx-auto px-6 md:px-16 lg:px-24">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center pt-24">
+            <div>
+                <p class="accent-color text-lg mb-4">Hai, nama saya</p>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-200">Ahdi Aghni.</h1>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold neon-text mt-2">Spesialis Layanan & Administrasi Data.</h2>
+                <p class="max-w-xl mt-6">
+                    Saya adalah seorang profesional berusia 22 tahun dari Cirebon dengan pengalaman lebih dari satu tahun di bidang layanan pelanggan, administrasi, dan manajemen data. Lulusan Teknik Komputer & Jaringan yang siap menerapkan keterampilan teknis dan interpersonal untuk memberikan kontribusi terbaik.
+                </p>
+                <div class="mt-8 flex space-x-4">
+                     <a href="#contact" class="bg-transparent border accent-color border-current text-current px-8 py-3 rounded-md hover:bg-teal-300/10 transition-all text-lg">
+                        Hubungi Saya
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tentang Saya -->
+        <section id="about" class="py-24">
+            <h2 class="section-heading text-3xl font-bold text-slate-200 mb-8 flex items-center">
+                <span class="accent-color mr-3 text-2xl font-normal">1.</span> Tentang Saya
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
+                <div class="md:col-span-3 text-slate-400 space-y-4">
+                    <p>
+                        Halo! Saya Ahdi, seorang individu yang bersemangat dalam memberikan solusi dan memastikan kelancaran operasional. Pengalaman saya selama lebih dari setahun telah membentuk kemampuan saya dalam berinteraksi dengan pelanggan, mengelola data secara akurat, dan menangani tugas-tugas administratif dengan efisien.
+                    </p>
+                    <p>
+                        Latar belakang pendidikan saya di <span class="accent-color">Teknik Komputer & Jaringan (TKJ)</span> dari SMKS NU Raudlatul Muta'allimin memberi saya fondasi teknis yang kuat. Saya terbiasa dengan pemecahan masalah dan berpikir logis, keterampilan yang sangat membantu saya baik dalam peran teknis maupun non-teknis.
+                    </p>
+                    <p>
+                        Saat ini, saya mencari tantangan baru di mana saya dapat menggabungkan keahlian layanan pelanggan, ketelitian dalam manajemen data, dan pemahaman teknis saya untuk mendukung pertumbuhan perusahaan.
+                    </p>
+                </div>
+                 <div class="md:col-span-2 flex justify-center items-start">
+                    <div class="w-64 h-64 relative group">
+                        <div class="absolute inset-0 bg-slate-200 rounded-md z-10 group-hover:-translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">
+                           <img src="assets/img/ahdiaghni.jpg" alt="Foto profil Ahdi Aghni" class="w-full h-full object-cover rounded-md grayscale hover:grayscale-0 transition-all duration-300">
+                        </div>
+                        <div class="absolute inset-0 border-2 accent-color rounded-md translate-x-2 translate-y-2 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-300"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pengalaman -->
+        <section id="experience" class="py-24">
+             <h2 class="section-heading text-3xl font-bold text-slate-200 mb-12 flex items-center">
+                <span class="accent-color mr-3 text-2xl font-normal">2.</span> Pengalaman Kerja
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card Pengalaman 1 -->
+                <div class="card-bg p-6 rounded-lg shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-200">Customer Service & Administrasi</h3>
+                    <p class="accent-color text-sm mb-3">Pengalaman > 1 Tahun</p>
+                    <ul class="list-disc list-inside text-slate-400 space-y-2">
+                        <li>Menangani pertanyaan dan keluhan pelanggan melalui berbagai kanal.</li>
+                        <li>Melakukan tugas administratif seperti penjadwalan dan korespondensi.</li>
+                        <li>Memastikan kepuasan pelanggan dengan memberikan solusi yang cepat dan tepat.</li>
+                    </ul>
+                </div>
+                
+                <!-- Card Pengalaman 2 -->
+                <div class="card-bg p-6 rounded-lg shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-200">Manajemen & Entri Data</h3>
+                    <p class="accent-color text-sm mb-3">Pengalaman > 1 Tahun</p>
+                    <ul class="list-disc list-inside text-slate-400 space-y-2">
+                        <li>Memasukkan, memverifikasi, dan mengelola data dengan tingkat akurasi tinggi.</li>
+                        <li>Membuat laporan sederhana berdasarkan data yang ada.</li>
+                        <li>Menjaga kerahasiaan dan integritas data perusahaan.</li>
+                    </ul>
+                </div>
+
+                <!-- Card Pengalaman 3 -->
+                <div class="card-bg p-6 rounded-lg shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-200">Full Stack Development (Proyek Pribadi)</h3>
+                    <p class="accent-color text-sm mb-3">Belajar Mandiri > 1 Tahun</p>
+                    <ul class="list-disc list-inside text-slate-400 space-y-2">
+                        <li>Mengembangkan aplikasi web dari awal hingga akhir, dari sisi frontend dan backend.</li>
+                        <li>Membangun antarmuka pengguna (UI) yang responsif dan interaktif.</li>
+                        <li>Merancang dan mengelola database serta membuat API untuk aplikasi.</li>
+                    </ul>
+                </div>
+
+                <!-- Card AI Enthusiast -->
+                <div class="card-bg p-6 rounded-lg shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                    <h3 class="text-xl font-bold text-slate-200">AI Enthusiast</h3>
+                    <p class="accent-color text-sm mb-3">Pembelajar Mandiri & Eksplorasi Berkelanjutan</p>
+                    <ul class="list-disc list-inside text-slate-400 space-y-2">
+                        <li>Aktif mengikuti perkembangan terbaru di bidang Kecerdasan Buatan dan Machine Learning.</li>
+                        <li>Mengeksplorasi berbagai model AI, termasuk LLM dan Generative AI, untuk aplikasi kreatif.</li>
+                        <li>Berkomitmen untuk terus belajar dan menerapkan teknologi AI dalam solusi inovatif.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Keahlian -->
+        <section id="skills" class="py-24">
+            <h2 class="section-heading text-3xl font-bold text-slate-200 mb-8 flex items-center">
+                <span class="accent-color mr-3 text-2xl font-normal">3.</span> Keahlian
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="layanan-pelanggan">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <p>Layanan Pelanggan</p>
+                    </div>
+                    <div id="explanation-layanan-pelanggan" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Kemampuan berinteraksi dan memenuhi kebutuhan pelanggan dengan efektif.
+                    </div>
+                </div>
+                 <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="manajemen-data">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        <p>Manajemen Data</p>
+                    </div>
+                    <div id="explanation-manajemen-data" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Mengelola, memelihara, dan menganalisis data untuk mendukung pengambilan keputusan.
+                    </div>
+                </div>
+                 <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="administrasi">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                        <p>Administrasi</p>
+                    </div>
+                    <div id="explanation-administrasi" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Mengatur dan mengelola tugas kantor serta mendukung operasional harian.
+                    </div>
+                </div>
+                 <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="entri-data">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <p>Entri Data</p>
+                    </div>
+                    <div id="explanation-entri-data" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Memasukkan informasi secara akurat ke dalam sistem atau database.
+                    </div>
+                </div>
+                 <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="dasar-jaringan">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9" /></svg>
+                        <p>Dasar Jaringan</p>
+                    </div>
+                    <div id="explanation-dasar-jaringan" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Memahami konsep dasar jaringan komputer dan konektivitas.
+                    </div>
+                </div>
+                <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="manajemen-waktu">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <p>Manajemen Waktu</p>
+                    </div>
+                    <div id="explanation-manajemen-waktu" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Mengatur prioritas dan menggunakan waktu secara efisien untuk mencapai tujuan.
+                    </div>
+                </div>
+                <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="problem-solving">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        <p>Problem Solving</p>
+                    </div>
+                    <div id="explanation-problem-solving" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Menganalisis masalah, mengidentifikasi akar penyebab, dan menemukan solusi efektif.
+                    </div>
+                </div>
+                <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="komunikasi">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10-5-10M19.75 12h-18" /></svg>
+                        <p>Komunikasi</p>
+                    </div>
+                    <div id="explanation-komunikasi" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Menyampaikan informasi secara jelas dan efektif, baik lisan maupun tulisan.
+                    </div>
+                </div>
+                <!-- Kerja sama tim -->
+                <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="kerja-sama-tim">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <p>Kerja sama tim</p>
+                    </div>
+                    <div id="explanation-kerja-sama-tim" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Kemampuan berkolaborasi secara efektif dengan anggota tim untuk mencapai tujuan bersama.
+                    </div>
+                </div>
+                <!-- Management tim -->
+                <div class="card-bg p-4 rounded-md flex flex-col items-center justify-center space-y-2 relative group">
+                    <div class="cursor-pointer skill-icon-wrapper flex flex-col items-center justify-center" data-skill="management-tim">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <p>Management tim</p>
+                    </div>
+                    <div id="explanation-management-tim" class="skill-explanation absolute bottom-0 left-0 right-0 bg-slate-700 text-white text-xs p-2 rounded-b-md opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Kemampuan memimpin, mengorganisir, dan memotivasi tim untuk mencapai kinerja optimal.
+                    </div>
+                </div>
+            </div>
+        </section> <!-- End of Keahlian section -->
+
+        <!-- Pembatas -->
+        <div class="w-full h-px bg-slate-700 my-16"></div>
+
+        <!-- Alat yang Dikuasai -->
+        <section id="tools" class="py-12 text-center">
+            <h3 class="text-2xl font-bold text-slate-200 mb-8">SAYA MENGUASAI ALAT & TEKNOLOGI:</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 items-center justify-center">
+                <!-- Linux -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <p class="text-slate-400 text-sm">Linux</p>
+                </div>
+                <!-- Mikrotik -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                    <p class="text-slate-400 text-sm">Mikrotik</p>
+                </div>
+                <!-- Web Server -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" /></svg>
+                    <p class="text-slate-400 text-sm">Web Server</p>
+                </div>
+                <!-- MySQL -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    <p class="text-slate-400 text-sm">MySQL</p>
+                </div>
+                
+                <!-- HTML -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                    <p class="text-slate-400 text-sm">HTML</p>
+                </div>
+                <!-- JavaScript -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                    <p class="text-slate-400 text-sm">JavaScript</p>
+                </div>
+                <!-- MongoDB -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM12 21c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2-3-.895-3-2V8l-2.5-2.5M12 21c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2-3-.895-3-2V8l-2.5-2.5" /></svg>
+                    <p class="text-slate-400 text-sm">MongoDB</p>
+                </div>
+                <!-- Microsoft Office -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <p class="text-slate-400 text-sm">Microsoft Office</p>
+                </div>
+                <!-- Software Engineer -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <p class="text-slate-400 text-sm">Software Engineer</p>
+                </div>
+                <!-- Machine Learning -->
+                <div class="flex flex-col items-center space-y-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    <p class="text-slate-400 text-sm">Machine Learning</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontak -->
+        <section id="contact" class="py-24 text-center max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold text-slate-200 mb-2 flex items-center justify-center">
+                <span class="accent-color mr-3 text-xl font-normal">4.</span> Hubungi Saya
+            </h2>
+            <h3 class="text-4xl md:text-5xl font-bold text-slate-200 mb-4">Mari Terhubung</h3>
+            <p class="text-slate-400 mb-8">
+                Saya selalu terbuka untuk diskusi mengenai peluang baru atau sekadar bertukar pikiran. Jangan ragu untuk menghubungi saya melalui email atau WhatsApp. Saya akan berusaha merespons secepatnya.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 text-lg">
+                 <a href="mailto:ahdi.aghnii@gmail.com" class="bg-transparent border accent-color border-current text-current px-8 py-3 rounded-md hover:bg-teal-300/10 transition-all">
+                    Kirim Email
+                </a>
+                <a href="https://wa.me/6281395411676" target="_blank" class="bg-transparent border accent-color border-current text-current px-8 py-3 rounded-md hover:bg-teal-300/10 transition-all">
+                    Chat WhatsApp
+                </a>
+            </div>
+             <div class="mt-16 max-w-md mx-auto card-bg rounded-lg border border-slate-700 shadow-lg p-8 text-center">
+                <div class="mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p class="text-sm uppercase tracking-wider text-slate-400">Domisili</p>
+                    <p class="text-xl text-slate-200 font-semibold">Bersedia di Cirebon & Indramayu, Jawa Barat</p>
+                </div>
+                <div class="border-t border-slate-700 my-6"></div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <p class="text-sm uppercase tracking-wider text-slate-400">Telepon</p>
+                    <a href="tel:+6281395411676" class="text-xl text-slate-200 font-semibold hover:accent-color transition-colors block">+62 813-9541-1676</a>
+                </div>
+                <div class="border-t border-slate-700 my-6"></div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto mb-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 4v7a2 2 0 002 2h14a2 2 0 002-2v-7m-18 0h18" /></svg>
+                    <p class="text-sm uppercase tracking-wider text-slate-400">Email</p>
+                    <a href="mailto:ahdi.aghnii@gmail.com" class="text-xl text-slate-200 font-semibold hover:accent-color transition-colors block">ahdi.aghnii@gmail.com</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-6 text-slate-500 text-sm">
+        <h3 class="text-lg accent-color mb-4 font-semibold tracking-widest animate-subtle-glow">FOLLOW ME ON</h3>
+        <div class="flex justify-center items-center space-x-6 mb-4">
+            <a href="https://github.com/MrAhdyourse" target="_blank" rel="noopener noreferrer" aria-label="Github" class="hover:text-slate-200 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://www.youtube.com/@Ahdyourse" target="_blank" rel="noopener noreferrer" aria-label="Youtube" class="hover:text-slate-200 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+            <a href="https://www.instagram.com/_ahdyours" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-slate-200 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.facebook.com/ahdyourse.withdilla" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-slate-200 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+        </div>
+        <p>Didesain & Dibuat oleh Ahdi Aghni</p>
+        <p>&copy; <span id="year"></span>. Seluruh hak cipta.</p>
+    </footer>
+
+    <script>
+        // Script untuk tahun di footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Script untuk header yang berubah saat scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('py-2', 'shadow-lg');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.remove('py-2', 'shadow-lg');
+                header.classList.add('py-4');
+            }
+        });
+
+        // Script untuk menu mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            setTimeout(() => {
+                mobileMenu.classList.remove('translate-x-full');
+            }, 10);
+        });
+
+        const closeMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+            setTimeout(() => {
+                 mobileMenu.classList.add('hidden');
+            }, 300);
+        }
+
+        closeMenuButton.addEventListener('click', closeMenu);
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Script for skill explanations
+        document.querySelectorAll('.skill-icon-wrapper').forEach(wrapper => {
+            wrapper.addEventListener('click', () => {
+                const skillId = wrapper.dataset.skill;
+                const explanationDiv = document.getElementById(`explanation-${skillId}`);
+
+                // Hide all other explanations
+                document.querySelectorAll('.skill-explanation').forEach(exp => {
+                    if (exp !== explanationDiv) {
+                        exp.classList.remove('opacity-100');
+                        exp.classList.add('opacity-0');
+                        // Optional: Add a small delay before hiding completely if needed
+                        setTimeout(() => {
+                            exp.style.height = '0'; // Collapse height
+                            exp.style.padding = '0 8px'; // Collapse padding
+                        }, 300);
+                    }
+                });
+
+                // Toggle current explanation
+                if (explanationDiv.classList.contains('opacity-0')) {
+                    explanationDiv.style.height = 'auto'; // Expand height
+                    explanationDiv.style.padding = '8px'; // Expand padding
+                    explanationDiv.classList.remove('opacity-0');
+                    explanationDiv.classList.add('opacity-100');
+                } else {
+                    explanationDiv.classList.remove('opacity-100');
+                    explanationDiv.classList.add('opacity-0');
+                    setTimeout(() => {
+                        explanationDiv.style.height = '0'; // Collapse height
+                        explanationDiv.style.padding = '0 8px'; // Collapse padding
+                    }, 300);
+                }
+            });
+        });
+
+        // Music controls
+        const backgroundMusic = document.getElementById('background-music');
+        const playButton = document.getElementById('play-button');
+        const pauseButton = document.getElementById('pause-button');
+
+        playButton.addEventListener('click', () => {
+            backgroundMusic.play();
+            playButton.classList.add('hidden');
+            pauseButton.classList.remove('hidden');
+        });
+
+        pauseButton.addEventListener('click', () => {
+            backgroundMusic.pause();
+            pauseButton.classList.add('hidden');
+            playButton.classList.remove('hidden');
+        });
+
+        // Optional: Handle when music ends (if not looping) or is paused externally
+        backgroundMusic.addEventListener('pause', () => {
+            playButton.classList.remove('hidden');
+            pauseButton.classList.add('hidden');
+        });
+
+        backgroundMusic.addEventListener('play', () => {
+            playButton.classList.add('hidden');
+            pauseButton.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

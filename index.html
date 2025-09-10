@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- METODE BARU: Perintah Redirect Langsung ke Browser -->
+    <!-- Ini akan memaksa browser pindah ke home.html setelah 6 detik, tidak peduli apa pun yang terjadi pada skrip. -->
+    <meta http-equiv="refresh" content="6; url=home.html" />
+
+    <title>ACCESSING SYSTEM...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; color: #00ff41; font-family: 'VT323', monospace; text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
+        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        #hacker-terminal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 600px; background: rgba(0, 0, 0, 0.75); border: 1px solid #00ff41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.5); padding: 20px; z-index: 2; box-sizing: border-box; }
+        #log { height: 200px; overflow-y: auto; margin-bottom: 15px; font-size: 1.1em; line-height: 1.5; }
+        #log span::after { content: '█'; display: inline-block; animation: blink 1s step-end infinite; }
+        @keyframes blink { from, to { color: transparent; } 50% { color: #00ff41; } }
+        #progress-container { width: 100%; border: 1px solid #00ff41; padding: 2px; }
+        #progress-bar { width: 0%; height: 15px; background: #00ff41; transition: width 0.1s linear; }
+        #progress-text { display: block; text-align: center; margin-top: 5px; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div id="hacker-terminal">
+        <div id="log"></div>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="progress-text">INITIALIZING...</div>
+    </div>
+    <script>
+        // --- Skrip Efek Matrix Rain (Tidak diubah) ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const alphabet = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array.from({ length: columns }).fill(1);
+        const drawMatrix = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) { rainDrops[i] = 0; }
+                rainDrops[i]++;
+            }
+        };
+        setInterval(drawMatrix, 33);
+
+        // --- Skrip Terminal Hacker (Tidak diubah) ---
+        const logElement = document.getElementById('log');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const lines = [ 'Booting kernel...', 'Initializing modules...', 'Bypassing firewall...', 'Establishing connection...', 'Decrypting data...', 'ACCESS GRANTED' ];
+        let currentLine = 0, charIndex = 0, progress = 0;
+        function typeLine() {
+            if (currentLine < lines.length) {
+                if (charIndex < lines[currentLine].length) {
+                    logElement.innerHTML += lines[currentLine].charAt(charIndex++);
+                    setTimeout(typeLine, Math.random() * 100 + 20);
+                } else {
+                    logElement.innerHTML += '<br>';
+                    charIndex = 0; currentLine++;
+                    setTimeout(typeLine, 300);
+                }
+                 logElement.scrollTop = logElement.scrollHeight;
+            }
+        }
+        function updateProgress() {
+            if (progress < 100) {
+                progress++;
+                progressBar.style.width = progress + '%';
+                progressText.textContent = `LOADING... ${progress}%`;
+                setTimeout(updateProgress, 40);
+            } else {
+                progressText.textContent = 'SYSTEM READY. REDIRECTING...';
+                // Skrip JavaScript redirect sengaja dihapus untuk memberi jalan pada metode Meta Refresh
+            }
+        }
+        setTimeout(() => {
+            logElement.innerHTML = '<span></span>';
+            typeLine();
+            updateProgress();
+        }, 500);
+    </script>
+</body>
+</html>
+
