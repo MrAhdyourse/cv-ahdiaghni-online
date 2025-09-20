@@ -3,96 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- METODE BARU: Perintah Redirect Langsung ke Browser -->
-    <!-- Ini akan memaksa browser pindah ke home.html setelah 6 detik, tidak peduli apa pun yang terjadi pada skrip. -->
-    <meta http-equiv="refresh" content="6; url=home.html" />
-
-    <title>ACCESSING SYSTEM...</title>
+    <title>ACCESS REQUIRED</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; color: #00ff41; font-family: 'VT323', monospace; text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
-        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        #hacker-terminal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 600px; background: rgba(0, 0, 0, 0.75); border: 1px solid #00ff41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.5); padding: 20px; z-index: 2; box-sizing: border-box; }
-        #log { height: 200px; overflow-y: auto; margin-bottom: 15px; font-size: 1.1em; line-height: 1.5; }
-        #log span::after { content: '█'; display: inline-block; animation: blink 1s step-end infinite; }
-        @keyframes blink { from, to { color: transparent; } 50% { color: #00ff41; } }
-        #progress-container { width: 100%; border: 1px solid #00ff41; padding: 2px; }
-        #progress-bar { width: 0%; height: 15px; background: #00ff41; transition: width 0.1s linear; }
-        #progress-text { display: block; text-align: center; margin-top: 5px; font-size: 1.2em; }
+        :root {
+            --primary-color: #00ff41; /* Neon Green */
+            --dark-color: #0a0a0a;
+            --error-color: #ff0033; /* Neon Red */
+            --glow-color: rgba(0, 255, 65, 0.5);
+            --font-family: 'VT323', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            /* background-color: var(--dark-color); */
+            background-image: url('assets/img/bg-indeks.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--primary-color);
+            font-family: var(--font-family);
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        body.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0) 50%,
+                rgba(10, 10, 10, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            animation: scan 10s linear infinite;
+        }
+
+        @keyframes scan {
+            from { background-position: 0 0; }
+            to { background-position: 0 -100px; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color);
+            backdrop-filter: blur(5px);
+            padding: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .terminal.error {
+            border-color: var(--error-color);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.5);
+            animation: shake 0.5s;
+        }
+
+        .terminal.success {
+            border-color: #00ffff; /* Cyan for success */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .terminal-header {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .terminal-prompt {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group span {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        #password-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed var(--primary-color);
+            color: var(--primary-color);
+            font-family: var(--font-family);
+            font-size: 1.5rem;
+            padding: 5px;
+        }
+
+        #password-input:focus {
+            outline: none;
+            border-bottom: 1px solid var(--primary-color);
+            box-shadow: 0 10px 15px -10px var(--glow-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            font-family: var(--font-family);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #submit-btn:hover, #submit-btn:focus {
+            background: var(--primary-color);
+            color: var(--dark-color);
+            box-shadow: 0 0 25px var(--glow-color);
+            text-shadow: none;
+        }
+
+        #submit-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .message-box {
+            margin-top: 20px;
+            min-height: 24px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .message-box .error-msg {
+            color: var(--error-color);
+            text-shadow: 0 0 5px rgba(255, 0, 51, 0.5);
+        }
+        
+        .message-box .success-msg {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
-    <canvas id="matrix-canvas"></canvas>
-    <div id="hacker-terminal">
-        <div id="log"></div>
-        <div id="progress-container">
-            <div id="progress-bar"></div>
-        </div>
-        <div id="progress-text">INITIALIZING...</div>
-    </div>
-    <script>
-        // --- Skrip Efek Matrix Rain (Tidak diubah) ---
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const alphabet = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const rainDrops = Array.from({ length: columns }).fill(1);
-        const drawMatrix = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00ff41';
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) { rainDrops[i] = 0; }
-                rainDrops[i]++;
-            }
-        };
-        setInterval(drawMatrix, 33);
 
-        // --- Skrip Terminal Hacker (Tidak diubah) ---
-        const logElement = document.getElementById('log');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const lines = [ 'Booting kernel...', 'Initializing modules...', 'Bypassing firewall...', 'Establishing connection...', 'Decrypting data...', 'ACCESS GRANTED' ];
-        let currentLine = 0, charIndex = 0, progress = 0;
-        function typeLine() {
-            if (currentLine < lines.length) {
-                if (charIndex < lines[currentLine].length) {
-                    logElement.innerHTML += lines[currentLine].charAt(charIndex++);
-                    setTimeout(typeLine, Math.random() * 100 + 20);
-                } else {
-                    logElement.innerHTML += '<br>';
-                    charIndex = 0; currentLine++;
-                    setTimeout(typeLine, 300);
+    <!-- <canvas id="matrix-canvas"></canvas> -->
+    <div class="scanline"></div>
+
+    <div class="container">
+        <div id="terminal" class="terminal">
+            <h1 class="terminal-header">PORTAL OTENTIKASI</h1>
+            <p class="terminal-prompt">> Selamat datang. Akses ke sistem ini memerlukan otorisasi.</p>
+            <p class="terminal-prompt">> Silakan masukkan kunci akses Anda untuk melanjutkan.</p>
+            
+            <form id="auth-form">
+                <div class="input-group">
+                    <span>PASS_KEY:</span>
+                    <input type="password" id="password-input" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" id="submit-btn">Authenticate</button>
+            </form>
+
+            <div id="message-box" class="message-box">
+                <p id="message-text"></p>
+                <p style="font-size: 0.9rem; opacity: 0.6; margin-top: 15px;">Belum punya akses? Hubungi pengembang.</p>
+            </div>
+
+            <!-- Bagian untuk Tampilan Ban -->
+            <div id="ban-container" style="display: none; text-align: center;">
+                <h2 class="terminal-header" style="color: var(--error-color);">AKSES DITOLAK</h2>
+                <p class="terminal-prompt">Anda telah salah memasukkan kunci akses beberapa kali.</p>
+                <p class="terminal-prompt">Sistem terkunci. Silakan coba lagi setelah:</p>
+                <div id="countdown" style="font-size: 2rem; margin: 20px 0; color: var(--error-color); text-shadow: 0 0 10px var(--error-color);"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- START: BAN SYSTEM CONFIGURATION ---
+            const FAILED_ATTEMPTS_KEY = 'loginFailedAttempts';
+            const BAN_EXPIRY_KEY = 'loginBanExpiry';
+            const MAX_ATTEMPTS = 2;
+            const BAN_DURATION = (48 * 60 * 60 * 1000) + (30 * 60 * 1000) + (40 * 1000); // 48 jam, 30 menit, 40 detik
+            // --- END: BAN SYSTEM CONFIGURATION ---
+
+            const authForm = document.getElementById('auth-form');
+            const passwordInput = document.getElementById('password-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const messageText = document.getElementById('message-text');
+            const terminal = document.getElementById('terminal');
+            const banContainer = document.getElementById('ban-container');
+            const countdownDisplay = document.getElementById('countdown');
+
+            // =======================================================================
+            // PENTING: FLEKSIBILITAS DAN KEAMANAN
+            // =======================================================================
+            const CORRECT_HASH = 'dd3e7b6cb3157ea37e4d9e718e790912f07f6c0d39dd0f7de11639e1c5753912';
+            const PORTFOLIO_URL = 'loading.html';
+            // =======================================================================
+
+            let countdownInterval;
+
+            function startCountdown(expiryTime) {
+                authForm.style.display = 'none';
+                document.getElementById('message-box').style.display = 'none';
+                banContainer.style.display = 'block';
+                terminal.classList.add('error');
+
+                countdownInterval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = expiryTime - now;
+
+                    if (distance < 0) {
+                        clearInterval(countdownInterval);
+                        unban();
+                        return;
+                    }
+
+                    const hours = Math.floor(distance / (1000 * 60 * 60)).toString().padStart(2, '0');
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+                    countdownDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+                }, 1000);
+            }
+
+            function unban() {
+                localStorage.removeItem(FAILED_ATTEMPTS_KEY);
+                localStorage.removeItem(BAN_EXPIRY_KEY);
+                location.reload();
+            }
+
+            function checkBanStatus() {
+                const banExpiry = localStorage.getItem(BAN_EXPIRY_KEY);
+                if (banExpiry) {
+                    const expiryTime = parseInt(banExpiry, 10);
+                    if (new Date().getTime() < expiryTime) {
+                        startCountdown(expiryTime);
+                    } else {
+                        unban();
+                    }
                 }
-                 logElement.scrollTop = logElement.scrollHeight;
             }
-        }
-        function updateProgress() {
-            if (progress < 100) {
-                progress++;
-                progressBar.style.width = progress + '%';
-                progressText.textContent = `LOADING... ${progress}%`;
-                setTimeout(updateProgress, 40);
-            } else {
-                progressText.textContent = 'SYSTEM READY. REDIRECTING...';
-                // Skrip JavaScript redirect sengaja dihapus untuk memberi jalan pada metode Meta Refresh
+
+            async function hashPassword(password) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
             }
-        }
-        setTimeout(() => {
-            logElement.innerHTML = '<span></span>';
-            typeLine();
-            updateProgress();
-        }, 500);
+
+            function showMessage(text, type) {
+                messageText.textContent = `> ${text}`;
+                messageText.className = `${type}-msg`;
+                terminal.classList.remove('error', 'success');
+                if (type) {
+                    terminal.classList.add(type);
+                }
+            }
+
+            function handleFailedAttempt() {
+                let failedAttempts = parseInt(localStorage.getItem(FAILED_ATTEMPTS_KEY) || '0');
+                failedAttempts++;
+
+                if (failedAttempts >= MAX_ATTEMPTS) {
+                    const expiryTime = new Date().getTime() + BAN_DURATION;
+                    localStorage.setItem(BAN_EXPIRY_KEY, expiryTime.toString());
+                    localStorage.setItem(FAILED_ATTEMPTS_KEY, failedAttempts.toString());
+                    startCountdown(expiryTime);
+                } else {
+                    localStorage.setItem(FAILED_ATTEMPTS_KEY, failedAttempts.toString());
+                    const attemptsLeft = MAX_ATTEMPTS - failedAttempts;
+                    showMessage(`ACCESS DENIED. ${attemptsLeft} attempt(s) left.`, 'error');
+                    terminal.classList.add('error');
+                    passwordInput.value = '';
+                    submitBtn.disabled = false;
+
+                    setTimeout(() => {
+                        terminal.classList.remove('error');
+                        showMessage('', '');
+                    }, 2000);
+                }
+            }
+
+            authForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const enteredPassword = passwordInput.value;
+                if (!enteredPassword) return;
+
+                submitBtn.disabled = true;
+                showMessage('Authenticating...', '');
+
+                const enteredHash = await hashPassword(enteredPassword);
+
+                setTimeout(() => { // Simulasi delay jaringan
+                    if (enteredHash === CORRECT_HASH) {
+                        localStorage.removeItem(FAILED_ATTEMPTS_KEY);
+                        showMessage('ACCESS GRANTED. Redirecting...', 'success');
+                        terminal.classList.add('success');
+                        
+                        sessionStorage.setItem('isAuthenticated', 'true');
+                        sessionStorage.setItem('playMusic', 'true');
+
+                        setTimeout(() => {
+                            document.body.classList.add('fade-out');
+                            setTimeout(() => {
+                                window.location.href = PORTFOLIO_URL;
+                            }, 500);
+                        }, 1500);
+
+                    } else {
+                        handleFailedAttempt();
+                    }
+                }, 1000);
+            });
+
+            // Initial check when the page loads
+            checkBanStatus();
+        });
     </script>
 </body>
 </html>
-

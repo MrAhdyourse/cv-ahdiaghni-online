@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
+    <script>
+        if (sessionStorage.getItem('isAuthenticated') !== 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahdi Aghni | Portofolio</title>
@@ -109,22 +114,10 @@
     </style>
 </head>
 <body class="antialiased leading-relaxed">
-    <div class="fixed bottom-4 right-4 z-50 flex items-center space-x-2 card-bg p-2 rounded-md shadow-lg">
-        <audio id="background-music" loop>
-            <source src="assets/music/musicbg.mp3" type="audio/mpeg">
-            Browser Anda tidak mendukung elemen audio.
-        </audio>
-        <button id="play-button" class="text-slate-200 hover:text-accent-color transition-colors focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                <path d="M5 3l14 9-14 9V3z"/>
-            </svg>
-        </button>
-        <button id="pause-button" class="text-slate-200 hover:text-accent-color transition-colors focus:outline-none hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
-            </svg>
-        </button>
-    </div>
+    <audio id="background-music" loop class="hidden">
+        <source src="assets/music/musicbg1.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
 
     <!-- Header / Navigasi -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-opacity-80 backdrop-blur-md transition-all duration-300">
@@ -566,32 +559,17 @@
             });
         });
 
-        // Music controls
-        const backgroundMusic = document.getElementById('background-music');
-        const playButton = document.getElementById('play-button');
-        const pauseButton = document.getElementById('pause-button');
-
-        playButton.addEventListener('click', () => {
-            backgroundMusic.play();
-            playButton.classList.add('hidden');
-            pauseButton.classList.remove('hidden');
-        });
-
-        pauseButton.addEventListener('click', () => {
-            backgroundMusic.pause();
-            pauseButton.classList.add('hidden');
-            playButton.classList.remove('hidden');
-        });
-
-        // Optional: Handle when music ends (if not looping) or is paused externally
-        backgroundMusic.addEventListener('pause', () => {
-            playButton.classList.remove('hidden');
-            pauseButton.classList.add('hidden');
-        });
-
-        backgroundMusic.addEventListener('play', () => {
-            playButton.classList.add('hidden');
-            pauseButton.classList.remove('hidden');
+        // Autoplay music after login
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('playMusic') === 'true') {
+                const backgroundMusic = document.getElementById('background-music');
+                if (backgroundMusic) {
+                    backgroundMusic.play().catch(error => {
+                        console.log("Autoplay was prevented: ", error);
+                    });
+                    sessionStorage.removeItem('playMusic'); // Play only once after login
+                }
+            }
         });
     </script>
 </body>
